@@ -102,7 +102,18 @@ jobs:
           python3 tools/bin/lpunpack.py -p vendor super.img .
           rm super.img
           [[ -e vendor.img ]] && zip ${{ env.latest_shortversion }}_vendor.zip vendor.img
-          [[ -e vendor.img ]] && rm vendor.img
+
+      - name: Get tee blobs
+        if: env.need_update == 1
+        run: |
+           mkdir -p vendor/mount vendor/tee
+           sudo mount vendor.img vendor/mount
+           cp -rfa vendor/mount/tee vendor/tee
+           cd vendor/tee
+           zip -rq0 --store ${{ env.latest_shortversion }}_tee.zip .
+           cd ../../
+           sudo umount vendor/mount
+           rm -rf vendor*
 
       - name: Update current version
         if: env.need_update == 1
@@ -135,3 +146,4 @@ jobs:
             ${{ env.bl_tar }}
             ${{ env.cp_tar }}
             ${{ env.latest_shortversion }}_vendor.zip
+            ${{ env.latest_shortversion }}_tee.zip
