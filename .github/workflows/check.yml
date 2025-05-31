@@ -91,15 +91,6 @@ jobs:
           sudo apt-get clean
           sudo rm -rf /usr/local
 
-      - name: Extract kernel images
-        if: env.need_update == 1
-        env:
-          FILES: boot.img.lz4 dtbo.img.lz4 init_boot.img.lz4 vbmeta.img.lz4 vendor_boot.img.lz4
-        run: |
-          for file in $FILES; do tar xvf ${{ env.ap_tar }} ${file}; done
-          tar cvf ${{ env.latest_shortversion }}_kernel.tar *.lz4
-          rm *.lz4
-
       - name: Extract PIT file
         if: env.need_update == 1
         run: |
@@ -163,7 +154,6 @@ jobs:
             ${{ env.bl_tar }}
             ${{ env.cp_tar }}
             ${{ env.home_csc_tar }}
-            ${{ env.latest_shortversion }}_kernel.tar
             ${{ env.pit_file }}
             ${{ env.latest_shortversion }}_patched_vbmeta.tar
             ${{ env.latest_shortversion }}_vendor.zip
