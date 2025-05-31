@@ -91,12 +91,6 @@ jobs:
           sudo apt-get clean
           sudo rm -rf /usr/local
 
-      - name: Extract PIT file
-        if: env.need_update == 1
-        run: |
-          tar --wildcards --exclude='*/*' -xvf ${{ env.csc_tar }} '*.pit'
-          echo "pit_file=`find -name *.pit`" >> $GITHUB_ENV
-
       - name: Generate patched vbmeta
         if: env.need_update == 1
         run: |
@@ -154,7 +148,6 @@ jobs:
             ${{ env.bl_tar }}
             ${{ env.cp_tar }}
             ${{ env.home_csc_tar }}
-            ${{ env.pit_file }}
             ${{ env.latest_shortversion }}_patched_vbmeta.tar
             ${{ env.latest_shortversion }}_vendor.zip
             ${{ env.latest_shortversion }}_vendor_dlkm.zip
