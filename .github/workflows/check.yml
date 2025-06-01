@@ -112,6 +112,7 @@ jobs:
            cp -rfa vendor/mount/tee vendor/tee
            cd vendor/tee
            zip -r0 --store ${{ env.latest_shortversion }}_tee.zip .
+           mv ${{ env.latest_shortversion }}_tee.zip ../../
            cd ../../
            sudo umount vendor/mount
            rm -rf vendor*
