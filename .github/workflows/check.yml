@@ -113,6 +113,15 @@ jobs:
            cd vendor/tee
            zip -r0 --store ${{ env.latest_shortversion }}_tee.zip .
            mv ${{ env.latest_shortversion }}_tee.zip ../../
+           
+      - name: Get firmware blobs
+        if: env.need_update == 1
+        run: |
+           mkdir -p vendor/firmware 
+           cp -rfa vendor/mount/firmware vendor/firmware
+           cd vendor/firmware
+           zip -r0 --store ${{ env.latest_shortversion }}_firmware.zip .
+           mv ${{ env.latest_shortversion }}_firmware.zip ../../
            cd ../../
            sudo umount vendor/mount
            rm -rf vendor*
