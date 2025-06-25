@@ -11,6 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - model: "SM-A556E"
+            csc: "THL"
+            omc: "THL"
 
     steps:
       - name: Checkout repo
@@ -54,7 +57,8 @@ jobs:
 
       - name: Fetch firmware
         if: env.need_update == 1
-        run: |
+        run: |         
+          imei="355326621234566"
           samfirm -m ${{ matrix.model }} -r ${{ matrix.csc }} -i $imei
 
       - name: Get path of files
