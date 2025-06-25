@@ -142,13 +142,13 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           tags: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.TOKEN }}
 
       - name: Upload release assets
         if: env.need_update == 1
         uses: softprops/action-gh-release@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           body_path: versions.txt
           tag_name: "${{ env.latest_shortversion }}_${{ matrix.omc }}"
